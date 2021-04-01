@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import { listTable, previewTable, delTable } from "@/api/tool/gen";
+import { listTable, previewTable, delTable, genTable } from "@/api/tool/gen";
 import importTable from "./importTable";
 import { downLoadZip } from "@/utils/zipdownload";
 export default {
@@ -237,11 +237,11 @@ export default {
     /** 生成代码操作 */
     handleGenTable(row) {
       const tableIds = row.table_id || this.tableIds;
-      if (tableIds == "") {
+      if (tableIds == "" || tableIds == undefined) {
         this.msgError("请选择要生成的数据");
         return;
       }
-      downLoadZip("/tool/gen/batchGenCode?tableId=" + tableIds, "ruoyi");
+      downLoadZip("/tool/gen/batchGenCode?tableId=" + tableIds);
     },
     /** 打开导入表弹窗 */
     openImportTable() {
@@ -262,7 +262,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.table_id);
+      this.ids = selection.map(item => item.table_id).join(",");
       this.tableNames = selection.map(item => item.table_name);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
@@ -284,7 +284,7 @@ export default {
       }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-      }).catch(function() {});
+      }).catch(function(e) {console.log(e)});
     }
   }
 };

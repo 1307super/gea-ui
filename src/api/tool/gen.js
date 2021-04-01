@@ -55,13 +55,24 @@ export function previewTable(tableId) {
     }
   })
 }
+
+// 生成代码
+export function genTable(tableId) {
+  return request({
+    url: '/tool/gen/batchGenCode',
+    method: 'get',
+    params: {
+      tableId: tableId
+    }
+  })
+}
 // 删除表数据
 export function delTable(tableId) {
   return request({
     url: '/tool/gen',
     method: 'delete',
     params: {
-      ids: tableId.join(",")
+      ids: tableId
     }
   })
 }

@@ -32,7 +32,7 @@ module.exports = {
     port: port,
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://docker.for.mac.host.internal:8090`,
+        target: `http://docker.for.mac.host.internal:8199`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API] : '/' + process.env.VUE_APP_BASE_API
