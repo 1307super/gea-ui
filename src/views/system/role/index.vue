@@ -180,6 +180,7 @@
             ref="menu"
             node-key="id"
             empty-text="加载中，请稍后"
+            :check-strictly="checkStrictly"
             :props="defaultProps"
           ></el-tree>
         </el-form-item>
@@ -220,6 +221,7 @@
             ref="dept"
             node-key="id"
             empty-text="加载中，请稍后"
+            :check-strictly="checkStrictly"
             :props="defaultProps"
           ></el-tree>
         </el-form-item>
@@ -315,7 +317,8 @@ export default {
         roleort: [
           { required: true, message: "角色顺序不能为空", trigger: "blur" }
         ]
-      }
+      },
+      checkStrictly: false
     };
   },
   created() {
@@ -368,16 +371,20 @@ export default {
     },
     /** 根据角色ID查询菜单树结构 */
     getRoleMenuTreeselect(roleId) {
+      this.checkStrictly = true
       roleMenuTreeselect(roleId).then(response => {
         this.menuOptions = response.data.menus;
         this.$refs.menu.setCheckedKeys(response.data.checkedKeys);
+        this.checkStrictly = false
       });
     },
     /** 根据角色ID查询部门树结构 */
     getRoleDeptTreeselect(roleId) {
+      this.checkStrictly = true
       roleDeptTreeselect(roleId).then(response => {
         this.deptOptions = response.data.depts;
         this.$refs.dept.setCheckedKeys(response.data.checkedKeys);
+        this.checkStrictly = false
       });
     },
     // 角色状态修改

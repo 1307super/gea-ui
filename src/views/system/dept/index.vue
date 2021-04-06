@@ -71,7 +71,6 @@
             v-hasPermi="['POST:/system/dept']"
           >新增</el-button>
           <el-button
-            v-if="scope.row.parent_id != 0"
             size="mini"
             type="text"
             icon="el-icon-delete"

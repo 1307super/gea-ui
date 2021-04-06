@@ -69,6 +69,7 @@ export default {
       open: false,
       // 弹出层标题
       title: "修改头像",
+      filename: "",
       options: {
         img: store.getters.avatar, //裁剪图片的地址
         autoCrop: true, // 是否默认生成截图框
@@ -83,6 +84,7 @@ export default {
     // 编辑头像
     editCropper() {
       this.open = true;
+      this.filename = ""
     },
     // 覆盖默认的上传行为
     requestUpload() {
@@ -105,6 +107,7 @@ export default {
       if (file.type.indexOf("image/") == -1) {
         this.msgError("文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。");
       } else {
+        this.filename = file.name
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -116,7 +119,7 @@ export default {
     uploadImg() {
       this.$refs.cropper.getCropBlob(data => {
         let formData = new FormData();
-        formData.append("avatarfile", data);
+        formData.append("avatarfile", data, this.filename);
         uploadAvatar(formData).then(response => {
           if (response.code === 0) {
             this.open = false;
