@@ -342,8 +342,8 @@ export default {
       getMenu(row.menu_id).then(response => {
         this.form = response.data;
         this.form.status = this.form.status + ""
-        this.form.visible = this.form.status + ""
-        this.form.is_frame = this.form.status + ""
+        this.form.visible = this.form.visible + ""
+        this.form.is_frame = this.form.is_frame + ""
         this.open = true;
         this.title = "修改菜单";
       });
