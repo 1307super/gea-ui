@@ -586,9 +586,10 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          this.form.postIds = this.form.postIds.join(",")
+          this.form.roleIds = this.form.roleIds.join(",")
+          var that = this
           if (this.form.user_id != undefined) {
-            this.form.postIds = this.form.postIds.join(",")
-            this.form.roleIds = this.form.roleIds.join(",")
             updateUser(this.form).then(response => {
               if (response.code === 0) {
                 this.msgSuccess("修改成功");
@@ -597,10 +598,11 @@ export default {
               } else {
                 this.msgError(response.msg);
               }
+            }).catch(()=>{
+                that.$set(that.form,"postIds",that.form.postIds.split(",").map(item => parseInt(item)))
+                that.$set(that.form,"roleIds",that.form.roleIds.split(",").map(item => parseInt(item)))
             });
           } else {
-            this.form.postIds = this.form.postIds.join(",")
-            this.form.roleIds = this.form.roleIds.join(",")
             addUser(this.form).then(response => {
               if (response.code === 0) {
                 this.msgSuccess("新增成功");
@@ -609,6 +611,9 @@ export default {
               } else {
                 this.msgError(response.msg);
               }
+            }).catch(()=>{
+                that.$set(that.form,"postIds",that.form.postIds.split(",").map(item => parseInt(item)))
+                that.$set(that.form,"roleIds",that.form.roleIds.split(",").map(item => parseInt(item)))
             });
           }
         }
