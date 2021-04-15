@@ -70,7 +70,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.tpl_category" placeholder="请选择">
+          <el-select v-model="info.treeCode" placeholder="请选择">
             <el-option
               v-for="column in info.columns"
               :key="column.column_name"
@@ -88,7 +88,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.tree_parentCode" placeholder="请选择">
+          <el-select v-model="info.treeParentCode" placeholder="请选择">
             <el-option
               v-for="column in info.columns"
               :key="column.column_name"
