@@ -195,7 +195,9 @@ export default {
         pageSize: 10,
         jobName: undefined,
         jobGroup: undefined,
-        status: undefined
+        status: undefined,
+        orderByColumn: "create_time",
+        isAsc: "desc"
       }
     };
   },
