@@ -22,7 +22,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['GET:/system/menu']">新增</el-button>
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['POST:/system/menu']">新增</el-button>
       </el-form-item>
     </el-form>
 

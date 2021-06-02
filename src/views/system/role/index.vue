@@ -308,7 +308,7 @@ export default {
       },
       // 表单校验
       rules: {
-        role_nme: [
+        role_name: [
           { required: true, message: "角色名称不能为空", trigger: "blur" }
         ],
         role_key: [
