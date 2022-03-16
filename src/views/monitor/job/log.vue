@@ -163,7 +163,12 @@
 </template>
 
 <script>
-import { listJobLog, delJobLog, exportJobLog, cleanJobLog } from "@/api/monitor/jobLog";
+import {
+  listJobLog,
+  delJobLog,
+  exportJobLog,
+  cleanJobLog,
+} from "@/api/monitor/jobLog";
 
 export default {
   name: "JobLog",
@@ -197,16 +202,16 @@ export default {
         jobGroup: undefined,
         status: undefined,
         orderByColumn: "create_time",
-        isAsc: "desc"
-      }
+        isAsc: "desc",
+      },
     };
   },
   created() {
     this.getList();
-    this.getDicts("sys_job_status").then(response => {
+    this.getDicts("sys_job_status").then((response) => {
       this.statusOptions = response.data;
     });
-    this.getDicts("sys_job_group").then(response => {
+    this.getDicts("sys_job_group").then((response) => {
       this.jobGroupOptions = response.data;
     });
   },
@@ -214,8 +219,11 @@ export default {
     /** 查询调度日志列表 */
     getList() {
       this.loading = true;
-      listJobLog(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.jobLogList = response.rows;
+      listJobLog(this.addDateRange(this.queryParams, this.dateRange)).then(
+        (response) => {
+          if (response.rows) {
+            this.jobLogList = response.rows;
+          }
           this.total = response.total;
           this.loading = false;
         }
@@ -242,7 +250,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.job_log_id).join(",");
+      this.ids = selection.map((item) => item.job_log_id).join(",");
       this.multiple = !selection.length;
     },
     /** 详细按钮操作 */
@@ -253,43 +261,56 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const jobLogIds = this.ids;
-      this.$confirm('是否确认删除调度日志编号为"' + jobLogIds + '"的数据项?', "警告", {
+      this.$confirm(
+        '是否确认删除调度日志编号为"' + jobLogIds + '"的数据项?',
+        "警告",
+        {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+          type: "warning",
+        }
+      )
+        .then(function () {
           return delJobLog(jobLogIds);
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        }).catch(function() {});
+        })
+        .catch(function () {});
     },
     /** 清空按钮操作 */
     handleClean() {
       this.$confirm("是否确认清空所有调度日志数据项?", "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return cleanJobLog();
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("清空成功");
-        }).catch(function() {});
+        })
+        .catch(function () {});
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm("是否确认导出所有调度日志数据项?", "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return exportJobLog(queryParams);
-        }).then(response => {
+        })
+        .then((response) => {
           this.download(response.msg);
-        }).catch(function() {});
-    }
-  }
+        })
+        .catch(function () {});
+    },
+  },
 };
 </script>

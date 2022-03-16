@@ -348,9 +348,11 @@ export default {
     getList() {
       this.loading = true;
       listJob(this.queryParams).then(response => {
-        this.jobList = response.rows;
-        this.total = response.total;
         this.loading = false;
+        this.total = response.total;
+        if (response.rows) {
+          this.jobList = response.rows;
+        }
       });
     },
     // 任务组名字典翻译
